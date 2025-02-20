@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>More Food Items - Ziggy Eats</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='food_items.css') }}"
+    />
+  </head>
+  <body class="bg-light">
+    <!-- Navbar -->
+    <header class="bg-danger py-3 fixed-top">
+      <nav class="container d-flex justify-content-between align-items-center">
+        <!-- Make the logo clickable -->
+        <a href="{{ url_for('home') }}" class="text-decoration-none">
+          <h1 class="logo text-white fw-bold mb-0">ZIGGY EATS</h1>
+        </a>
+
+        <!-- Search Bar -->
+        <form class="d-flex search-bar">
+          <input
+            class="form-control me-2"
+            type="search"
+            placeholder="Search for food or restaurants"
+            aria-label="Search"
+          />
+          <button class="btn btn-light" type="submit">🔍</button>
+        </form>
+
+        <!-- Navbar Links -->
+        <ul class="nav">
+          <li class="nav-item">
+            <a href="{{ url_for('home') }}" class="nav-link text-white">EXPLORE</a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ url_for('more_food') }}" class="nav-link text-white">FOOD</a>
+          </li>
+          <li class="nav-item">
+            <a  href="{{ url_for('offers') }}" class="nav-link text-white">OFFERS</a> 
+          </li>
+        </ul>
+
+        <!-- Buttons (Cart & Login/User Profile) -->
+        <div class="d-flex gap-2">
+          {% if current_user.is_admin %}
+      <a href="{{ url_for('admin_dashboard') }}" class="btn btn-danger">Admin Panel</a>
+        {% else %}
+      <a href="{{ url_for('cart') }}" class="btn btn-light">🛒 Cart</a>
+          {% endif %}
+
+          {% if current_user.is_authenticated %}
+          <!-- If User is Logged In, Show Username -->
+          <div class="dropdown">
+            <button
+              class="btn btn-outline-light dropdown-toggle"
+              type="button"
+              id="userDropdown"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              {{ current_user.username }}
+            </button>
+            <ul
+              class="dropdown-menu dropdown-menu-end"
+              aria-labelledby="userDropdown"
+            >
+              <li>
+                <a class="dropdown-item" href="{{ url_for('logout') }}"
+                  >Logout</a
+                >
+              </li>
+            </ul>
+          </div>
+          {% else %}
+          <!-- If Not Logged In, Show Login/Signup -->
+          <a href="{{ url_for('login') }}" class="btn btn-outline-light"
+            >Login / Signup</a
+          >
+          {% endif %}
+        </div>
+      </nav>
+    </header>
+
+    <main class="container mt-5 pt-5">
+      <h2 class="text-center text-danger fw-bold mb-4">Explore Our Menu</h2>
+
+      <!-- Starters Section -->
+      <section id="starters" class="menu-section">
+        <h3 class="text-danger mb-3">Starters</h3>
+        <div class="row">
+          <div class="col-md-3">
+            <div class="card food-card">
+              <img
+                src="{{ url_for('static', filename='IMAGES/starter1.png') }}"
+                class="card-img-top food-img"
+                alt="Spring Rolls"
+              />
+              <div class="card-body">
+                <h5 class="card-title">Spring Rolls</h5>
+                <p class="card-text">₹120</p>
+                <div class="quantity">
+                  <button class="btn btn-sm btn-outline-danger decrease">
+                    -
+                  </button>
+                  <span>0</span>
+                  <button class="btn btn-sm btn-outline-danger increase">
+                    +
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card food-card">
+              <img
+                src="{{ url_for('static', filename='IMAGES/starter2.png') }}"
+                class="card-img-top food-img"
+                alt="Spring Rolls"
+              />
+              <div class="card-body">
+                <h5 class="card-title">Paneer Tikka Skewers</h5>
+                <p class="card-text">₹320</p>
+                <div class="quantity">
+                  <button class="btn btn-sm btn-outline-danger decrease">
+                    -
+                  </button>
+                  <span>0</span>
+                  <button class="btn btn-sm btn-outline-danger increase">
+                    +
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card food-card">
+              <img
+                src="{{ url_for('static', filename='IMAGES/starter3.png') }}"
+                class="card-img-top food-img"
+                alt="Spring Rolls"
+              />
+              <div class="card-body">
+                <h5 class="card-title">Hara Bhara Kababs</h5>
+                <p class="card-text">₹180</p>
+                <div class="quantity">
+                  <button class="btn btn-sm btn-outline-danger decrease">
+                    -
+                  </button>
+                  <span>0</span>
+                  <button class="btn btn-sm btn-outline-danger increase">
+                    +
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card food-card">
+              <img
+                src="{{ url_for('static', filename='IMAGES/starter4.png') }}"
+                class="card-img-top food-img"
+                alt="Spring Rolls"
+              />
+              <div class="card-body">
+                <h5 class="card-title">Crispy Corn Fritters</h5>
+                <p class="card-text">₹340</p>
+                <div class="quantity">
+                  <button class="btn btn-sm btn-outline-danger decrease">
+                    -
+                  </button>
+                  <span>0</span>
+                  <button class="btn btn-sm btn-outline-danger increase">
+                    +
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Main Course Section -->
+      <section id="main-course" class="menu-section">
+        <h3 class="text-danger mb-3">Main Course</h3>
+        <div class="row">
+          <div class="col-md-3">
+            <div class="card food-card">
+              <img
+                src="{{ url_for('static', filename='IMAGES/maincourse1.png') }}"
+                class="card-img-top food-img"
+                alt="Paneer Butter Masala"
+              />
+              <div class="card-body">
+                <h5 class="card-title">Paneer Butter Masala</h5>
+                <p class="card-text">₹380</p>
+                <div class="quantity">
+                  <button class="btn btn-sm btn-outline-danger decrease">
+                    -
+                  </button>
+                  <span>0</span>
+                  <button class="btn btn-sm btn-outline-danger increase">
+                    +
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card food-card">
+              <img
+                src="{{ url_for('static', filename='IMAGES/maincourse2.png') }}"
+                class="card-img-top food-img"
+                alt="Paneer Butter Masala"
+              />
+              <div class="card-body">
+                <h5 class="card-title">Dal Tadka</h5>
+                <p class="card-text">₹200</p>
+                <div class="quantity">
+                  <button class="btn btn-sm btn-outline-danger decrease">
+                    -
+                  </button>
+                  <span>0</span>
+                  <button class="btn btn-sm btn-outline-danger increase">
+                    +
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card food-card">
+              <img
+                src="{{ url_for('static', filename='IMAGES/maincourse3.png') }}"
+                class="card-img-top food-img"
+                alt="Paneer Butter Masala"
+              />
+              <div class="card-body">
+                <h5 class="card-title">Mixed Vegetable Curry</h5>
+                <p class="card-text">₹250</p>
+                <div class="quantity">
+                  <button class="btn btn-sm btn-outline-danger decrease">
+                    -
+                  </button>
+                  <span>0</span>
+                  <button class="btn btn-sm btn-outline-danger increase">
+                    +
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card food-card">
+              <img
+                src="{{ url_for('static', filename='IMAGES/maincourse4.png') }}"
+                class="card-img-top food-img"
+                alt="Paneer Butter Masala"
+              />
+              <div class="card-body">
+                <h5 class="card-title">Vegatable Pulao</h5>
+                <p class="card-text">₹180</p>
+                <div class="quantity">
+                  <button class="btn btn-sm btn-outline-danger decrease">
+                    -
+                  </button>
+                  <span>0</span>
+                  <button class="btn btn-sm btn-outline-danger increase">
+                    +
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Breads Section -->
+      <section id="breads" class="menu-section">
+        <h3 class="text-danger mb-3">Breads</h3>
+        <div class="row">
+          <div class="col-md-3">
+            <div class="card food-card">
+              <img
+                src="{{ url_for('static', filename='IMAGES/bread1.png') }}"
+                class="card-img-top food-img"
+                alt="Butter Naan"
+              />
+              <div class="card-body">
+                <h5 class="card-title">Roti</h5>
+                <p class="card-text">₹15</p>
+                <div class="quantity">
+                  <button class="btn btn-sm btn-outline-danger decrease">
+                    -
+                  </button>
+                  <span>0</span>
+                  <button class="btn btn-sm btn-outline-danger increase">
+                    +
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card food-card">
+              <img
+                src="{{ url_for('static', filename='IMAGES/bread4.png') }}"
+                class="card-img-top food-img"
+                alt="Butter Naan"
+              />
+              <div class="card-body">
+                <h5 class="card-title">Stuffed Naan</h5>
+                <p class="card-text">₹75</p>
+                <div class="quantity">
+                  <button class="btn btn-sm btn-outline-danger decrease">
+                    -
+                  </button>
+                  <span>0</span>
+                  <button class="btn btn-sm btn-outline-danger increase">
+                    +
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card food-card">
+              <img
+                src="{{ url_for('static', filename='IMAGES/bread2.png') }}"
+                class="card-img-top food-img"
+                alt="Butter Naan"
+              />
+              <div class="card-body">
+                <h5 class="card-title">Butter Naan</h5>
+                <p class="card-text">₹45</p>
+                <div class="quantity">
+                  <button class="btn btn-sm btn-outline-danger decrease">
+                    -
+                  </button>
+                  <span>0</span>
+                  <button class="btn btn-sm btn-outline-danger increase">
+                    +
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card food-card">
+              <img
+                src="{{ url_for('static', filename='IMAGES/bread3.png') }}"
+                class="card-img-top food-img"
+                alt="Butter Naan"
+              />
+              <div class="card-body">
+                <h5 class="card-title">Missi Roti</h5>
+                <p class="card-text">₹25</p>
+                <div class="quantity">
+                  <button class="btn btn-sm btn-outline-danger decrease">
+                    -
+                  </button>
+                  <span>0</span>
+                  <button class="btn btn-sm btn-outline-danger increase">
+                    +
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Sides Section -->
+      <section id="sides" class="menu-section">
+        <h3 class="text-danger mb-3">Sides</h3>
+        <div class="row">
+          <div class="col-md-3">
+            <div class="card food-card">
+              <img
+                src="{{ url_for('static', filename='IMAGES/side1.png') }}"
+                class="card-img-top food-img"
+                alt="Masala Papad"
+              />
+              <div class="card-body">
+                <h5 class="card-title">Masala Papad</h5>
+                <p class="card-text">₹50</p>
+                <div class="quantity">
+                  <button class="btn btn-sm btn-outline-danger decrease">
+                    -
+                  </button>
+                  <span>0</span>
+                  <button class="btn btn-sm btn-outline-danger increase">
+                    +
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card food-card">
+              <img
+                src="{{ url_for('static', filename='IMAGES/side2.png') }}"
+                class="card-img-top food-img"
+                alt="Masala Papad"
+              />
+              <div class="card-body">
+                <h5 class="card-title">Boondi Raita</h5>
+                <p class="card-text">₹40</p>
+                <div class="quantity">
+                  <button class="btn btn-sm btn-outline-danger decrease">
+                    -
+                  </button>
+                  <span>0</span>
+                  <button class="btn btn-sm btn-outline-danger increase">
+                    +
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card food-card">
+              <img
+                src="{{ url_for('static', filename='IMAGES/side3.png') }}"
+                class="card-img-top food-img"
+                alt="Masala Papad"
+              />
+              <div class="card-body">
+                <h5 class="card-title">Mixed Pickle</h5>
+                <p class="card-text">₹20</p>
+                <div class="quantity">
+                  <button class="btn btn-sm btn-outline-danger decrease">
+                    -
+                  </button>
+                  <span>0</span>
+                  <button class="btn btn-sm btn-outline-danger increase">
+                    +
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card food-card">
+              <img
+                src="{{ url_for('static', filename='IMAGES/side4.png') }}"
+                class="card-img-top food-img"
+                alt="Masala Papad"
+              />
+              <div class="card-body">
+                <h5 class="card-title">Green Chutney</h5>
+                <p class="card-text">₹15</p>
+                <div class="quantity">
+                  <button class="btn btn-sm btn-outline-danger decrease">
+                    -
+                  </button>
+                  <span>0</span>
+                  <button class="btn btn-sm btn-outline-danger increase">
+                    +
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Beverages Section -->
+      <section id="beverages" class="menu-section">
+        <h3 class="text-danger mb-3">Beverages</h3>
+        <div class="row">
+          <div class="col-md-3">
+            <div class="card food-card">
+              <img
+                src="{{ url_for('static', filename='IMAGES/beverage1.png') }}"
+                class="card-img-top food-img"
+                alt="Mango Lassi"
+              />
+              <div class="card-body">
+                <h5 class="card-title">Mango Lassi</h5>
+                <p class="card-text">₹100</p>
+                <div class="quantity">
+                  <button class="btn btn-sm btn-outline-danger decrease">
+                    -
+                  </button>
+                  <span>0</span>
+                  <button class="btn btn-sm btn-outline-danger increase">
+                    +
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="card food-card">
+              <img
+                src="{{ url_for('static', filename='IMAGES/beverage2.png') }}"
+                class="card-img-top food-img"
+                alt="Mango Lassi"
+              />
+              <div class="card-body">
+                <h5 class="card-title">Masala Chai</h5>
+                <p class="card-text">₹50</p>
+                <div class="quantity">
+                  <button class="btn btn-sm btn-outline-danger decrease">
+                    -
+                  </button>
+                  <span>0</span>
+                  <button class="btn btn-sm btn-outline-danger increase">
+                    +
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="card food-card">
+              <img
+                src="{{ url_for('static', filename='IMAGES/beverage3.png') }}"
+                class="card-img-top food-img"
+                alt="Mango Lassi"
+              />
+              <div class="card-body">
+                <h5 class="card-title">Cold Coffee</h5>
+                <p class="card-text">₹150</p>
+                <div class="quantity">
+                  <button class="btn btn-sm btn-outline-danger decrease">
+                    -
+                  </button>
+                  <span>0</span>
+                  <button class="btn btn-sm btn-outline-danger increase">
+                    +
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="card food-card">
+              <img
+                src="{{ url_for('static', filename='IMAGES/beverage4.png') }}"
+                class="card-img-top food-img"
+                alt="Mango Lassi"
+              />
+              <div class="card-body">
+                <h5 class="card-title">Coca Cola</h5>
+                <p class="card-text">₹50</p>
+                <div class="quantity">
+                  <button class="btn btn-sm btn-outline-danger decrease">
+                    -
+                  </button>
+                  <span>0</span>
+                  <button class="btn btn-sm btn-outline-danger increase">
+                    +
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="bg-dark text-white text-center py-4 mt-5">
+      <p>&copy; 2025 Ziggy Eats. Delicious Meals Delivered!</p>
+      <p>
+        <a href="{{ url_for('terms_and_conditions') }}" class="text-white"
+          >Terms & Conditions &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a
+        >
+        <a href="{{ url_for('about_us') }}" class="text-white">&nbsp;&nbsp;&nbsp;About Us</a>
+      </p>
+      <p>📞 Contact us: support@ziggyeats.com | 123-456-7890</p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    <!-- Your Custom JS for quantity buttons -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+          document.querySelectorAll(".food-card").forEach((card) => {
+              const foodName = card.querySelector(".card-title").innerText;
+              const price = parseFloat(card.querySelector(".card-text").innerText.replace("₹", "").trim());
+      
+              let quantityElement = card.querySelector(".quantity span");
+              let increaseBtn = card.querySelector(".quantity .increase");
+              let decreaseBtn = card.querySelector(".quantity .decrease");
+      
+              function updateCart(quantity) {
+                  fetch("/update_cart", {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({ food_name: foodName, price: price, quantity: quantity })
+                  })
+                  .then(response => response.json())
+                  .then(data => console.log(data))
+                  .catch(error => console.error("Error:", error));
+              }
+      
+              increaseBtn.addEventListener("click", function () {
+                  let quantity = parseInt(quantityElement.innerText) + 1;
+                  quantityElement.innerText = quantity;
+                  updateCart(quantity);
+              });
+      
+              decreaseBtn.addEventListener("click", function () {
+                  let quantity = Math.max(0, parseInt(quantityElement.innerText) - 1);
+                  quantityElement.innerText = quantity;
+                  updateCart(quantity);
+              });
+          });
+      });
+      </script>
+      
+  </body>
+</html>

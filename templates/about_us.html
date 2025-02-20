@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Us - Ziggy Eats</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{{ url_for('static', filename='about.css') }}">
+  </head>
+
+  <body>
+    <!-- Navbar -->
+    <header class="bg-danger py-3 fixed-top">
+      <nav class="container d-flex justify-content-between align-items-center">
+        <!-- Make the logo clickable -->
+        <a href="{{ url_for('home') }}" class="text-decoration-none">
+          <h1 class="logo text-white fw-bold mb-0">ZIGGY EATS</h1>
+        </a>
+
+        <!-- Search Bar -->
+        <form class="d-flex search-bar">
+          <input
+            class="form-control me-2"
+            type="search"
+            placeholder="Search for food or restaurants"
+            aria-label="Search"
+          />
+          <button class="btn btn-light" type="submit">🔍</button>
+        </form>
+
+        <!-- Navbar Links -->
+        <ul class="nav">
+          <li class="nav-item">
+            <a href="{{ url_for('home') }}" class="nav-link text-white">EXPLORE</a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ url_for('more_food') }}" class="nav-link text-white">FOOD</a>
+          </li>
+          <li class="nav-item">
+            <a  href="{{ url_for('offers') }}" class="nav-link text-white">OFFERS</a>
+          </li>
+        </ul>
+
+      
+
+        <!-- Buttons (Cart & Login/User Profile) -->
+        <div class="d-flex gap-2">
+          {% if current_user.is_admin %}
+          <a href="{{ url_for('admin_dashboard') }}" class="btn btn-danger"
+            >Admin Panel</a
+          >
+          {% else %}
+          <a href="{{ url_for('cart') }}" class="btn btn-light">🛒 Cart</a>
+          {% endif %} {% if current_user.is_authenticated %}
+          <!-- If User is Logged In, Show Username -->
+          <div class="dropdown">
+            <button
+              class="btn btn-outline-light dropdown-toggle"
+              type="button"
+              id="userDropdown"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              {{ current_user.username }}
+            </button>
+            <ul
+              class="dropdown-menu dropdown-menu-end"
+              aria-labelledby="userDropdown"
+            >
+              <li>
+                <a class="dropdown-item" href="{{ url_for('logout') }}"
+                  >Logout</a
+                >
+              </li>
+            </ul>
+          </div>
+          {% else %}
+          <!-- If Not Logged In, Show Login/Signup -->
+          <a href="{{ url_for('login') }}" class="btn btn-outline-light"
+            >Login / Signup</a
+          >
+          {% endif %}
+        </div>
+      </nav>
+    </header>
+
+    <!-- About Us Section -->
+    <div class="container my-5">
+      <h1 class="text-center mb-4">About Us</h1>
+      <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="col">
+          <div class="card h-100 shadow-sm">
+            <img
+              src="../static/IMAGES/mission.png"
+              class="card-img-top"
+              alt="Our Mission"
+            />
+            <div class="card-body">
+              <h5 class="card-title">Our Mission</h5>
+              <p class="card-text">
+                To bring delicious meals from your favorite canteen directly to
+                your fingertips, making ordering simple and fast.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100 shadow-sm">
+            <img
+              src="../static/IMAGES/ourteam.png"
+              class="card-img-top"
+              alt="Our Team"
+            />
+            <div class="card-body">
+              <h5 class="card-title">Our Team</h5>
+              <p class="card-text">
+                A passionate group of foodies and tech enthusiasts committed to
+                improving your dining experience.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100 shadow-sm">
+            <img
+              src="../static/IMAGES/values.png"
+              class="card-img-top"
+              alt="Our Values"
+            />
+            <div class="card-body">
+              <h5 class="card-title">Our Values</h5>
+              <p class="card-text">
+                Quality, speed, and customer satisfaction are at the core of
+                everything we do at Ziggy Eats.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Our Story Section -->
+      <div id="our-story" class="my-5">
+        <h2 class="text-center">Our Story</h2>
+        <p class="text-center">
+          Founded in 2025, Ziggy Eats was born out of a love for food and
+          technology. Our goal was simple: make ordering food from your campus
+          canteen as easy as possible. Today, we're proud to serve hundreds of
+          students daily with fresh and fast meals.
+        </p>
+      </div>
+
+      <!-- Why Choose Us Section -->
+      <div class="my-5">
+        <h2 class="text-center">Why Choose Us?</h2>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">Easy and quick ordering process</li>
+          <li class="list-group-item">Real-time order tracking</li>
+          <li class="list-group-item">Exclusive discounts and offers</li>
+          <li class="list-group-item">Wide variety of canteen options</li>
+        </ul>
+      </div>
+
+      <!-- Customer Testimonials -->
+      <div class="my-5">
+        <h2 class="text-center">What Our Customers Say</h2>
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+          <div class="col">
+            <div class="card h-100 p-3">
+              <p class="card-text">
+                "Ziggy Eats has made my college life so much easier! No more
+                waiting in lines for food."
+              </p>
+              <h6 class="text-end">- Alex, Student</h6>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card h-100 p-3">
+              <p class="card-text">
+                "I love how fast and simple it is to order my lunch now. Highly
+                recommended!"
+              </p>
+              <h6 class="text-end">- Priya, Student</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-4 mt-5">
+      <p>&copy; 2025 Ziggy Eats. Delicious Meals Delivered!</p>
+      <p>
+        <a href="{{ url_for('terms_and_conditions') }}" class="text-white"
+          >Terms & Conditions &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a
+        >
+        <a href="{{ url_for('about_us') }}" class="text-white">&nbsp;&nbsp;&nbsp;About Us</a>
+      </p>
+      <p>📞 Contact us: support@ziggyeats.com | 123-456-7890</p>
+    </footer>
+  
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

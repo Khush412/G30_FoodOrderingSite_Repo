@@ -1,0 +1,150 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap");
+body {
+  font-family: "Poppins", sans-serif;
+  padding-top: 80px; /* Space for fixed navbar */
+  background-color: #f8f9fa; /* Light background for contrast */
+}
+/* Footer */
+footer {
+  font-weight: 400;
+  background-color: #343a40; /* Dark footer */
+  color: white;
+  padding: 20px;
+}
+
+footer a {
+  text-decoration: none;
+  font-weight: 500;
+  color: white;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+/* Navbar */
+header {
+  font-family: "Poppins", sans-serif;
+}
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.navbar .nav-link {
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+
+/* Search Bar */
+.search-bar input {
+  width: 250px;
+}
+
+h1,
+h2 {
+  font-weight: bold;
+  color: #343a40;
+}
+
+h2 {
+  margin-top: 40px;
+}
+
+p,
+li {
+  font-size: 1rem;
+}
+
+/* Card Styles */
+.card {
+  border: none;
+  border-radius: 15px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card-img-top {
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  height: 200px;
+  object-fit: cover;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  color: #007bff;
+}
+
+.card-text {
+  color: #6c757d;
+}
+
+/* Navbar Active Link */
+.navbar-nav .nav-link.active {
+  font-weight: bold;
+  color: #ffc107 !important;
+}
+
+/* Our Story Section */
+#our-story {
+  text-align: center;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#our-story p {
+  font-size: 1.1rem;
+  margin-top: 15px;
+}
+
+/* Why Choose Us Section */
+.list-group-item {
+  background-color: #fff;
+  border: none;
+  font-size: 1.1rem;
+  padding: 10px 20px;
+}
+
+.list-group-item::before {
+  content: "✔ ";
+  color: #28a745;
+  font-weight: bold;
+}
+
+/* Testimonials */
+.card-text {
+  font-style: italic;
+}
+
+.card h6 {
+  font-weight: bold;
+  color: #343a40;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .card-img-top {
+    height: 150px;
+  }
+
+  h1,
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  p,
+  li {
+    font-size: 0.9rem;
+  }
+
+  #our-story p {
+    font-size: 1rem;
+  }
+}

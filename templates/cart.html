@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Cart - Ziggy Eats</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='cart.css') }}">
+</head>
+<body class="bg-light">
+
+  <!-- Navbar -->
+<header class="bg-danger py-3 fixed-top">
+  <nav class="container d-flex justify-content-between align-items-center">
+    <!-- Make the logo clickable -->
+    <a href="{{ url_for('home') }}" class="text-decoration-none">
+      <h1 class="logo text-white fw-bold mb-0">ZIGGY EATS</h1>
+    </a>
+
+    <!-- Search Bar -->
+    <form class="d-flex search-bar">
+      <input class="form-control me-2" type="search" placeholder="Search for food or restaurants" aria-label="Search">
+      <button class="btn btn-light" type="submit">🔍</button>
+    </form>
+
+    <!-- Navbar Links -->
+    <ul class="nav">
+      <a href="{{ url_for('home') }}" class="nav-link text-white">EXPLORE</a>
+      <a href="{{ url_for('more_food') }}" class="nav-link text-white">FOOD</a>
+      <a href="{{ url_for('offers') }}" class="nav-link text-white">OFFERS</a>
+    </ul>
+
+    <!-- Buttons (Cart & Login/User Profile) -->
+    <div class="d-flex gap-2">
+      {% if current_user.is_admin %}
+      <a href="{{ url_for('admin_dashboard') }}" class="btn btn-danger">Admin Panel</a>
+  {% else %}
+      <a href="{{ url_for('cart') }}" class="btn btn-light">🛒 Cart</a>
+  {% endif %}
+
+  {% if current_user.is_authenticated %}
+  <!-- If User is Logged In, Show Username -->
+  <div class="dropdown">
+    <button class="btn btn-outline-light dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+      {{ current_user.username }}
+    </button>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+      <li><a class="dropdown-item" href="{{ url_for('logout') }}">Logout</a></li>
+    </ul>
+  </div>
+{% else %}
+  <!-- If Not Logged In, Show Login/Signup -->
+  <a href="{{ url_for('login') }}" class="btn btn-outline-light">Login / Signup</a>
+{% endif %}
+    </div>
+  </nav>
+</header>
+
+  
+
+  <!-- Cart Main Section -->
+  <main class="container mt-5 pt-5">
+    <h2 class="text-center text-danger fw-bold mb-4">Your Shopping Cart</h2>
+
+    <!-- Cart Table -->
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+            <tr>
+                <th>Food Item</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody id="cart-items">
+            <!-- Cart items will be inserted here dynamically -->
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3" class="text-end fw-bold">Total Amount:</td>
+                <td id="total-price" class="fw-bold">₹0.00</td>
+            </tr>
+        </tfoot>
+    </table>
+    
+    </div>
+
+    <!-- Empty Cart Message -->
+    <div id="empty-cart-message" class="text-center mt-3 text-muted">
+      <h5>Your cart is empty! 🛒</h5>
+      <a href="{{ url_for('more_food') }}" class="btn btn-danger mt-3">Browse Food Items</a>
+    </div>
+
+    <!-- Cart Summary -->
+    <div class="cart-summary text-end mt-4">
+      <button class="btn btn-success mt-3" id="checkout-btn">Proceed to Checkout</button>
+    </div>
+    
+
+    <footer class="bg-dark text-white text-center py-4 mt-5">
+      <p>&copy; 2025 Ziggy Eats. Delicious Meals Delivered!</p>
+      <p>
+        <a href="{{ url_for('terms_and_conditions') }}" class="text-white"
+          >Terms & Conditions &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a
+        >
+        <a href="{{ url_for('about_us') }}" class="text-white">&nbsp;&nbsp;&nbsp;About Us</a>
+      </p>
+      <p>📞 Contact us: support@ziggyeats.com | 123-456-7890</p>
+    </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        fetch("/get_cart")
+        .then(response => response.json())
+        .then(cart => {
+            let cartContainer = document.getElementById("cart-items");
+            let totalPriceElement = document.getElementById("total-price");
+            let totalAmount = 0;
+    
+            cartContainer.innerHTML = ""; // Clear existing items
+    
+            cart.forEach(item => {
+                let itemTotal = item.price * item.quantity;
+                totalAmount += itemTotal;
+    
+                cartContainer.innerHTML += `
+                    <tr>
+                        <td>${item.food_name}</td>
+                        <td>₹${item.price.toFixed(2)}</td>
+                        <td>${item.quantity}</td>
+                        <td>₹${itemTotal.toFixed(2)}</td>
+                    </tr>
+                `;
+            });
+    
+            totalPriceElement.innerText = `₹${totalAmount.toFixed(2)}`;
+        })
+        .catch(error => console.error("Error:", error));
+    });
+    </script>
+    
+  
+</body>
+</html>

@@ -1,0 +1,103 @@
+/* Import Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+/* Global Styles */
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f8f9fa;
+}
+
+/* Navbar */
+header {
+  font-family: 'Poppins', sans-serif;
+}
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.navbar .nav-link {
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+
+/* Search Bar */
+.search-bar input {
+  width: 250px;
+}
+
+/* Cart Table Styling */
+.table {
+  background: white;
+}
+
+.table thead {
+  font-weight: bold;
+}
+
+/* Empty Cart Message */
+#empty-cart-message {
+  display: none; /* This will be shown dynamically in JS if cart is empty */
+}
+
+/* Cart Summary */
+.cart-summary {
+  margin-bottom: 80px; /* Added more space above footer */
+}
+
+/* Footer */
+footer {
+  font-weight: 400;
+  background-color: #343a40; /* Dark footer */
+  color: white;
+  padding: 20px;
+}
+
+footer a {
+  text-decoration: none;
+  font-weight: 500;
+  color: white;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+/* Ensure the page takes full height */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Wrapper for content to push footer down */
+.main-content {
+  flex: 1;
+}
+
+/* Footer */
+footer {
+  font-weight: 400;
+  background-color: #343a40; /* Dark footer */
+  color: white;
+  padding: 20px;
+}
+
+footer a {
+  text-decoration: none;
+  font-weight: 500;
+  color: white;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+/* Contact Info Styling */
+footer p:last-child {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
