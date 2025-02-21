@@ -6,137 +6,143 @@
     <title>Admin Dashboard - Ziggy Eats</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    
     <style>
-        /* Global Styles */
+        /* General Styling */
         body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #f8f9fa;
-            overflow-x: hidden;
+            font-family: 'Quicksand', sans-serif;
+            background-color: #f5f5f5;
         }
-        
-        /* Sidebar */
-        .sidebar {
-            width: 250px;
-            height: 100vh;
-            position: fixed;
-            background-color: #dc3545;
-            color: white;
-            padding-top: 20px;
-            transition: all 0.3s;
+
+        /* Navbar Styling */
+        .navbar {
+            background: linear-gradient(135deg, #8B0000, #DC143C);
+            padding: 15px 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
-        .sidebar h3 {
-            text-align: center;
+
+        .navbar-brand {
+            font-size: 26px;
             font-weight: bold;
-            margin-bottom: 20px;
+            color: #FFD700; /* Gold color for premium touch */
+            letter-spacing: 1px;
         }
-        .sidebar a {
-            display: block;
-            padding: 12px 20px;
+
+        .navbar-nav .nav-link {
             color: white;
-            text-decoration: none;
-            font-size: 17px;
+            font-size: 16px;
+            font-weight: 600;
             transition: 0.3s;
-            border-radius: 5px;
         }
-        .sidebar a:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-            transform: translateX(5px);
-        }
-        .sidebar a i {
-            margin-right: 10px;
+
+        .navbar-nav .nav-link:hover {
+            color: #FFD700; /* Gold color on hover */
         }
 
         /* Main Content */
-        .main-content {
-            margin-left: 270px;
-            padding: 20px;
+        .container {
+            margin-top: 90px;
         }
-        .dashboard-cards {
-            display: flex;
-            justify-content: space-between;
-            gap: 20px;
-        }
-        .card {
-            transition: all 0.3s ease-in-out;
-            border-radius: 10px;
-            border: none;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            text-align: center;
-        }
-        .card:hover {
-            transform: scale(1.05);
-            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
-        }
-        .card i {
-            font-size: 50px;
-            color: #dc3545;
-        }
-        .dashboard-stat {
-            font-size: 22px;
+
+        h2 {
+            color: #8B0000;
             font-weight: bold;
-            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
         }
+
+        /* Dashboard Cards */
+        .dashboard-card {
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            border: none;
+            background: white;
+            color: #8B0000;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .dashboard-card i {
+            font-size: 50px;
+            margin-bottom: 10px;
+            color: #DC143C;
+        }
+
+        .dashboard-card h5 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .dashboard-card a {
+            background-color: #DC143C;
+            color: white;
+            font-weight: bold;
+            border-radius: 50px;
+            transition: 0.3s;
+            padding: 8px 15px;
+        }
+
+        .dashboard-card a:hover {
+            background-color: #8B0000;
+            color: #FFD700;
+        }
+
     </style>
 </head>
 <body>
 
-    <!-- Sidebar -->
-    <div class="sidebar">
-        <h3>Admin Panel</h3>
-        <a href="#"><i class="fas fa-chart-line"></i> Dashboard</a>
-        <a href="#"><i class="fas fa-utensils"></i> Manage Menu</a>
-        <a href="#"><i class="fas fa-shopping-cart"></i> View Orders</a>
-        <a href="#"><i class="fas fa-users"></i> Manage Users</a>
-        <a href="{{ url_for('home') }}"><i class="fas fa-home"></i> Back to Site</a>
-        <a href="{{ url_for('logout') }}" class="text-warning"><i class="fas fa-sign-out-alt"></i> Logout</a>
-    </div>
-
-    <!-- Main Content -->
-    <div class="main-content">
-        <h2 class="text-danger fw-bold">Welcome, Admin!</h2>
-        <p>Monitor and manage Ziggy Eats from here.</p>
-
-        <!-- Dashboard Cards -->
-        <div class="dashboard-cards mt-4">
-            <div class="card shadow">
-                <i class="fas fa-box"></i>
-                <h5 class="mt-3">Total Orders</h5>
-                <p class="dashboard-stat">1,245</p>
-            </div>
-            <div class="card shadow">
-                <i class="fas fa-users"></i>
-                <h5 class="mt-3">Total Customers</h5>
-                <p class="dashboard-stat">3,678</p>
-            </div>
-            <div class="card shadow">
-                <i class="fas fa-dollar-sign"></i>
-                <h5 class="mt-3">Total Revenue</h5>
-                <p class="dashboard-stat">₹1,12,500</p>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">Admin Panel</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('manage_menu') }}"><i class="fas fa-utensils"></i> Manage Menu</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('manage_users') }}"><i class="fas fa-users"></i> Manage Users</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('manage_offers') }}"><i class="fas fa-tags"></i> Manage Offers</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('home') }}"><i class="fas fa-home"></i> Back to Site</a></li>
+                    <li class="nav-item"><a class="nav-link text-warning" href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                </ul>
             </div>
         </div>
+    </nav>
 
-        <!-- Functional Cards -->
-        <div class="row mt-5">
+    <!-- Main Content -->
+    <div class="container">
+        <h2>Welcome, Admin!</h2>
+        <p class="text-center">Manage the restaurant efficiently from here.</p>
+
+        <div class="row mt-4">
             <div class="col-md-4">
-                <div class="card p-4 text-center">
+                <div class="dashboard-card">
                     <i class="fas fa-utensils"></i>
-                    <h5 class="mt-3">Manage Food Items</h5>
-                    <a href="#" class="btn btn-danger mt-2">Go to Menu</a>
+                    <h5>Manage Food Items</h5>
+                    <a href="{{ url_for('manage_menu') }}" class="btn btn-danger mt-2">Go to Menu</a>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="card p-4 text-center">
-                    <i class="fas fa-shopping-cart"></i>
-                    <h5 class="mt-3">View Orders</h5>
-                    <a href="#" class="btn btn-danger mt-2">View Orders</a>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card p-4 text-center">
+                <div class="dashboard-card">
                     <i class="fas fa-users"></i>
-                    <h5 class="mt-3">Manage Users</h5>
-                    <a href="#" class="btn btn-danger mt-2">Manage Users</a>
+                    <h5>Manage Users</h5>
+                    <a href="{{ url_for('manage_users') }}" class="btn btn-danger mt-2">Manage Users</a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="dashboard-card">
+                    <i class="fas fa-tags"></i>
+                    <h5>Manage Offers</h5>
+                    <a href="{{ url_for('manage_offers') }}" class="btn btn-danger mt-2">Manage Offers</a>
                 </div>
             </div>
         </div>

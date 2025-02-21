@@ -2,6 +2,7 @@ from flask import Flask, render_template, redirect, url_for, flash, request, ses
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
+from werkzeug.utils import secure_filename
 
 import os
 
@@ -19,6 +20,7 @@ bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'  # Redirect if not logged in
 
+
 # User Model
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -34,6 +36,11 @@ class Cart(db.Model):
     price = db.Column(db.Float, nullable=False)
     quantity = db.Column(db.Integer, default=1)
 
+# Define MenuItem model
+class MenuItem(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    price = db.Column(db.Float, nullable=False)
 
 # Load User for Flask-Login
 @login_manager.user_loader
@@ -52,6 +59,11 @@ def about_us():
 @app.route('/terms_and_conditions')
 def terms_and_conditions():
     return render_template('terms_and_conditions.html')
+
+@app.route('/menu')
+def menu():
+    menu_items = MenuItem.query.all()  # Fetch all food items from the database
+    return render_template('menu.html', menu_items=menu_items)
 
 # Register Route
 @app.route('/register', methods=['GET', 'POST'])
@@ -106,13 +118,42 @@ def login():
 
     return render_template('login.html')
 
-@app.route('/admin_dashboard')
+@app.route('/admin-dashboard')
 @login_required
 def admin_dashboard():
-    if not current_user.is_admin:  # If not admin, send back to home
-        flash("Access denied!", "danger")
+    if not current_user.is_admin:
         return redirect(url_for('home'))
     return render_template('admin_dashboard.html')
+
+@app.route('/admin/manage-menu', methods=['GET', 'POST'])
+@login_required
+def manage_menu():
+    if not current_user.is_admin:
+        return redirect(url_for('home'))
+    if request.method == 'POST':
+        name = request.form.get('name')
+        price = request.form.get('price')
+        new_item = MenuItem(name=name, price=float(price))
+        db.session.add(new_item)
+        db.session.commit()
+        flash("Menu item added successfully!", "success")
+    menu_items = MenuItem.query.all()
+    return render_template('admin_manage_menu.html', menu_items=menu_items)
+
+@app.route('/admin/manage-users')
+@login_required
+def manage_users():
+    if not current_user.is_admin:
+        return redirect(url_for('home'))
+    users = User.query.all()
+    return render_template('admin_manage_users.html', users=users)
+
+@app.route('/admin/manage-offers')
+@login_required
+def manage_offers():
+    if not current_user.is_admin:
+        return redirect(url_for('home'))
+    return render_template('admin_manage_offers.html')
 
 
 # Logout Route (Redirects to home)
@@ -150,6 +191,41 @@ def add_to_cart():
     session['cart'] = cart
     total = sum(item['price'] * item['quantity'] for item in cart)
     return jsonify({'cart_items': cart, 'total': total})
+
+
+# Route to delete a user
+@app.route('/admin/delete-user/<int:user_id>')
+def delete_user(user_id):
+    if not current_user.is_authenticated or not current_user.is_admin:
+        return redirect(url_for('home'))
+    user = User.query.get(user_id)
+    if user:
+        db.session.delete(user)
+        db.session.commit()
+    return redirect(url_for('manage_users'))
+
+
+# Route to delete a menu item
+@app.route('/admin/delete-menu-item/<int:item_id>')
+def delete_menu_item(item_id):
+    if not current_user.is_authenticated or not current_user.is_admin:
+        return redirect(url_for('home'))
+    item = MenuItem.query.get(item_id)
+    if item:
+        db.session.delete(item)
+        db.session.commit()
+    return redirect(url_for('manage_menu'))
+
+# Route to delete an offer
+@app.route('/admin/delete-offer/<int:offer_id>')
+def delete_offer(offer_id):
+    if not current_user.is_authenticated or not current_user.is_admin:
+        return redirect(url_for('home'))
+    offer = Offer.query.get(offer_id)
+    if offer:
+        db.session.delete(offer)
+        db.session.commit()
+    return redirect(url_for('manage_offers'))
 
 
 @app.route('/remove_from_cart', methods=['POST'])
@@ -229,6 +305,7 @@ def add_is_admin_column():
 
 # Call this function when the app starts
 add_is_admin_column()
+
 
 # Run Flask App
 if __name__ == '__main__':
