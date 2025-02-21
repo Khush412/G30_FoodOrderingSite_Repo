@@ -9,10 +9,13 @@
       rel="stylesheet"
     />
     <style>
-      /* General Styling */
+      /* Import Google Fonts */
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap");
+
+      /* Global Styles */
       body {
-        background-color: #f8f9fa;
-        font-family: "Arial", sans-serif;
+        font-family: "Poppins", sans-serif;
+        background-color: #f8f9fa; /* Light background for better contrast */
       }
 
       /* Navbar */
@@ -35,6 +38,24 @@
         width: 250px;
       }
 
+      /* Footer */
+      footer {
+        font-weight: 400;
+        background-color: #343a40; /* Dark footer */
+        color: white;
+        padding: 20px;
+      }
+
+      footer a {
+        text-decoration: none;
+        font-weight: 500;
+        color: white;
+      }
+
+      footer a:hover {
+        text-decoration: underline;
+      }
+
       /* Page Title */
       .page-title {
         font-size: 32px;
@@ -43,7 +64,7 @@
         letter-spacing: 1px;
         color: #dc3545;
       }
-
+      
       /* Menu Card Styling */
       .card {
         border: none;
@@ -75,23 +96,7 @@
       .btn-danger:hover {
         background-color: #b71c1c;
       }
-      /* Footer */
-      footer {
-        font-weight: 400;
-        background-color: #343a40; /* Dark footer */
-        color: white;
-        padding: 20px;
-      }
-
-      footer a {
-        text-decoration: none;
-        font-weight: 500;
-        color: white;
-      }
-
-      footer a:hover {
-        text-decoration: underline;
-      }
+      
     </style>
   </head>
   <body>

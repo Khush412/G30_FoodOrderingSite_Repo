@@ -216,6 +216,20 @@ def delete_menu_item(item_id):
         db.session.commit()
     return redirect(url_for('manage_menu'))
 
+@app.route('/admin/add-offer', methods=['POST'])
+def add_offer():
+    if not current_user.is_authenticated or not current_user.is_admin:
+        return redirect(url_for('home'))
+    
+    title = request.form.get('title')
+    discount = request.form.get('discount')
+
+    new_offer = Offer(title=title, discount=discount)
+    db.session.add(new_offer)
+    db.session.commit()
+
+    return redirect(url_for('manage_offers'))
+
 # Route to delete an offer
 @app.route('/admin/delete-offer/<int:offer_id>')
 def delete_offer(offer_id):

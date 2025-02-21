@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Exclusive Offers - Ziggy Eats</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/a076d05399.js"
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      /* Import Google Fonts */
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap");
+
+      /* Global Styles */
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: #f8f9fa; /* Light background for better contrast */
+      }
+
+      /* Navbar */
+      header {
+        font-family: "Poppins", sans-serif;
+      }
+
+      .logo {
+        font-size: 1.8rem;
+        font-weight: 600;
+      }
+
+      .navbar .nav-link {
+        font-weight: 500;
+        font-size: 1.1rem;
+      }
+
+      /* Search Bar */
+      .search-bar input {
+        width: 250px;
+      }
+
+      /* Footer */
+      footer {
+        font-weight: 400;
+        background-color: #343a40; /* Dark footer */
+        color: white;
+        padding: 20px;
+      }
+
+      footer a {
+        text-decoration: none;
+        font-weight: 500;
+        color: white;
+      }
+
+      footer a:hover {
+        text-decoration: underline;
+      }
+
+      .offer-card {
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        border-radius: 10px;
+        border: none;
+        overflow: hidden;
+        position: relative;
+      }
+      .offer-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+      }
+      .offer-tag {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background: #dc3545;
+        color: white;
+        padding: 5px 12px;
+        font-size: 14px;
+        font-weight: bold;
+        border-radius: 5px;
+      }
+      .offer-img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+      }
+      .offer-title {
+        font-weight: bold;
+        font-size: 18px;
+        color: #333;
+      }
+      .offer-details {
+        font-size: 14px;
+        color: #777;
+      }
+      .offer-btn {
+        background-color: #dc3545;
+        color: white;
+        transition: 0.3s;
+      }
+      .offer-btn:hover {
+        background-color: #c82333;
+      }
+      .content-spacing {
+        margin-top: 100px; /* Ensure content is not hidden behind navbar */
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <header class="bg-danger py-3 fixed-top">
+      <nav class="container d-flex justify-content-between align-items-center">
+        <!-- Make the logo clickable -->
+        <a href="{{ url_for('home') }}" class="text-decoration-none">
+          <h1 class="logo text-white fw-bold mb-0">ZIGGY EATS</h1>
+        </a>
+
+        <!-- Search Bar -->
+        <form class="d-flex search-bar">
+          <input
+            class="form-control me-2"
+            type="search"
+            placeholder="Search for food or restaurants"
+            aria-label="Search"
+          />
+          <button class="btn btn-light" type="submit">🔍</button>
+        </form>
+
+        <!-- Navbar Links -->
+        <ul class="nav">
+          <li class="nav-item">
+            <a href="{{ url_for('home') }}" class="nav-link text-white"
+              >EXPLORE</a
+            >
+          </li>
+          <li class="nav-item">
+            <a href="{{ url_for('more_food') }}" class="nav-link text-white"
+              >FOOD</a
+            >
+          </li>
+          <li class="nav-item">
+            <a href="{{ url_for('offers') }}" class="nav-link text-white"
+              >OFFERS</a
+            >
+          </li>
+        </ul>
+
+        <!-- Buttons (Cart & Login/User Profile) -->
+        <div class="d-flex gap-2">
+          {% if current_user.is_admin %}
+          <a href="{{ url_for('admin_dashboard') }}" class="btn btn-danger"
+            >Admin Panel</a
+          >
+          {% else %}
+          <a href="{{ url_for('cart') }}" class="btn btn-light">🛒 Cart</a>
+          {% endif %} {% if current_user.is_authenticated %}
+          <!-- If User is Logged In, Show Username -->
+          <div class="dropdown">
+            <button
+              class="btn btn-outline-light dropdown-toggle"
+              type="button"
+              id="userDropdown"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              {{ current_user.username }}
+            </button>
+            <ul
+              class="dropdown-menu dropdown-menu-end"
+              aria-labelledby="userDropdown"
+            >
+              <li>
+                <a class="dropdown-item" href="{{ url_for('logout') }}"
+                  >Logout</a
+                >
+              </li>
+            </ul>
+          </div>
+          {% else %}
+          <!-- If Not Logged In, Show Login/Signup -->
+          <a href="{{ url_for('login') }}" class="btn btn-outline-light"
+            >Login / Signup</a
+          >
+          {% endif %}
+        </div>
+      </nav>
+    </header>
+    <!-- Offers Section -->
+    <div class="container content-spacing">
+      <h2 class="text-center text-danger fw-bold">
+        🔥 Exclusive Offers for You! 🔥
+      </h2>
+      <p class="text-center text-muted">Grab these deals before they expire!</p>
+
+      <div class="row mt-4">
+        <!-- Offer 1 -->
+        <div class="col-md-4">
+          <div class="card offer-card shadow-sm">
+            <span class="offer-tag">50% OFF</span>
+            <img src="static/IMAGES/offer3.png" class="offer-img" alt="Offer" />
+            <div class="card-body text-center">
+              <h5 class="offer-title">Flat 50% Off on First Order</h5>
+              <p class="offer-details">Use code: <b>FIRST50</b></p>
+              <a href="#" class="btn offer-btn w-100">Grab Deal</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Offer 2 -->
+        <div class="col-md-4">
+          <div class="card offer-card shadow-sm">
+            <span class="offer-tag">Combo Deal</span>
+            <img src="static/IMAGES/offer2.png" class="offer-img" alt="Combo" />
+            <div class="card-body text-center">
+              <h5 class="offer-title">Burger + Fries + Coke at ₹199</h5>
+              <p class="offer-details">Save ₹100 on this combo!</p>
+              <a href="#" class="btn offer-btn w-100">Grab Deal</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Offer 3 -->
+        <div class="col-md-4">
+          <div class="card offer-card shadow-sm">
+            <span class="offer-tag">20% OFF</span>
+            <img
+              src="static/IMAGES/offer1.png"
+              class="offer-img"
+              alt="Discount"
+            />
+            <div class="card-body text-center">
+              <h5 class="offer-title">20% Off on Main Course</h5>
+              <p class="offer-details">Valid for all orders above ₹499</p>
+              <a href="#" class="btn offer-btn w-100">Grab Deal</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Second Row (New 3 Cards) -->
+      <div class="row mt-4">
+        <!-- Offer 4 -->
+        <div class="col-md-4">
+          <div class="card offer-card shadow-sm">
+            <span class="offer-tag">₹150 OFF</span>
+            <img
+              src="static/IMAGES/offer4.png"
+              class="offer-img"
+              alt="Weekend Special"
+            />
+            <div class="card-body text-center">
+              <h5 class="offer-title">Weekend Special: Flat ₹150 Off</h5>
+              <p class="offer-details">Valid on orders above ₹700</p>
+              <a href="#" class="btn offer-btn w-100">Grab Deal</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Offer 5 -->
+        <div class="col-md-4">
+          <div class="card offer-card shadow-sm">
+            <span class="offer-tag">Buy 1 Get 1</span>
+            <img
+              src="static/IMAGES/offer5.png"
+              class="offer-img"
+              alt="Dessert Deal"
+            />
+            <div class="card-body text-center">
+              <h5 class="offer-title">Dessert Delight: BOGO Offer</h5>
+              <p class="offer-details">Buy 1 Get 1 Free on all Desserts</p>
+              <a href="#" class="btn offer-btn w-100">Grab Deal</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Offer 6 -->
+        <div class="col-md-4">
+          <div class="card offer-card shadow-sm">
+            <span class="offer-tag">Free Beverage</span>
+            <img
+              src="static/IMAGES/offer6.png"
+              class="offer-img"
+              alt="Free Drink"
+            />
+            <div class="card-body text-center">
+              <h5 class="offer-title">Free Beverage on ₹299+ Orders</h5>
+              <p class="offer-details">
+                Get a free drink with every ₹299+ order
+              </p>
+              <a href="#" class="btn offer-btn w-100">Grab Deal</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-4 mt-5">
+      <p>&copy; 2025 Ziggy Eats. Delicious Meals Delivered!</p>
+      <p>
+        <a href="{{ url_for('terms_and_conditions') }}" class="text-white"
+          >Terms & Conditions &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a
+        >
+        <a href="{{ url_for('about_us') }}" class="text-white"
+          >&nbsp;&nbsp;&nbsp;About Us</a
+        >
+      </p>
+      <p>📞 Contact us: support@ziggyeats.com | 123-456-7890</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
